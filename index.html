@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+  integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+  integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+  integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+  integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+
+<head>
+  <title>Agenda telefonica</title>
+
+        <style>
+            li{cursor: pointer}
+        </style>
+</head>
+
+<body class='bg-dark' >
+
+<div class="card  mt-5"  >
+    <div class="card-header">
+      <h5 id="telefonica" class="mb-0">
+        Agenda telefonica
+      </h5>
+    </div>
+    <div class="card-body">
+      <form class="needs-validation" novalidate>
+        <div class="form-row">
+          <div class="col-md-8 mb-3">
+            <label for="validationCustom01">Nome completo</label>
+            <input type="text" class="form-control" name="nome" id="validationCustom01" placeholder="Nome completo"
+              value="" required>
+            <div class="valid-feedback">
+              Ótimo!
+            </div>
+          </div>
+
+        </div>
+        <div class="form-row">
+          <div class="col-md-6 mb-3">
+            <label for="validationCustom03">Email</label>
+            <input type="email" name="email" class="form-control" id="validationCustom03" placeholder="Email" required>
+            <div class="invalid-feedback">
+              Por favor, insira um email válido!
+            </div>
+          </div>
+
+          <div class="col-md-3 mb-3">
+            <label for="validationCustom05">Telefone</label>
+            <input pattern="/^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/" type="tel" class="form-control" name="numero" id="validationCustom05"
+               placeholder="Formato: xx xxxx-xxxx" required>
+            <div class="invalid-feedback">
+              Por favor, insira um número válido!
+            </div>
+          </div>
+        </div>
+        
+        <button id='button' class="btn btn-primary" type="submit">Enviar</button>
+        <button type="button"  class="btn ml-2  consultar   btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+  Consultar
+</button>
+      </form>
+
+
+<!-- Button -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Lista de contatos
+          <p style="font-size: 0.9rem;">Clique <strong>Editar</strong> novamente para salvar alterações</p>
+        </h5>
+        <br>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+ 
+        <input type="text" class="txt" id="txt">
+        <button onclick="addLI()">Lista</button>
+        <button onclick="editLI()">Editar</button>
+        <button onclick="deleteLI()">Apagar da tela</button>
+        <button class='bg-danger' onclick="DeletList()">Deletar Lista</button>
+        <ul id="list">
+        </ul>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+      <script>
+
+
+//Validando
+(function () {
+    'use strict';
+      window.addEventListener('load', function () {
+
+        var forms = document.getElementsByClassName('needs-validation');
+
+        var validation = Array.prototype.filter.call(forms, function (form) {
+        form.addEventListener('submit', function (event) {
+
+            if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      }, false);
+})();
+//Salvando dados
+button.onclick = function createPerson() {
+
+var newPerson = new Object();
+
+newPerson.nome = document.getElementById('validationCustom01').value;
+newPerson.email = document.getElementById('validationCustom03').value;
+newPerson.numero = document.getElementById('validationCustom05').value;
+
+if (sessionStorage.person ) {
+          person = JSON.parse(sessionStorage.getItem('person')); 
+} else {
+  person = [];
+}
+
+let ValueCurrent = $("#validationCustom05").val()
+ValueCurrent.toString()
+let Regex =/^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/
+
+let validation =  $('.needs-validation').hasClass('was-validated')//verificando campos
+
+if  (Regex.test(ValueCurrent) == true && validation == true ){
+        person.push(newPerson)
+        sessionStorage.setItem('person', JSON.stringify(person));
+}if(Regex.test(ValueCurrent) == false) {
+  window.alert('Digite um telefone válido!')
+}
+var retrievedObject = sessionStorage.getItem('person')
+let show = JSON.parse(retrievedObject)
+let contato = show.map(GetNumeros)
+let resultado = contato.map(Verificando)
+}
+function Verificando(valor) {
+if ($("#validationCustom05").val() === valor)return
+}
+function GetNumeros(objeto) {
+return objeto.numero
+}
+
+//ModalList
+var inputText = document.getElementById("txt"),
+                 items = document.querySelectorAll("#list li"),
+                 tab = [], index;
+
+             for(var i = 0; i < items.length; i++){
+                 tab.push(items[i].innerHTML);
+             }
+
+             for(var i = 0; i < items.length; i++){
+                 
+                 items[i].onclick = function(){
+                     index = tab.indexOf(this.innerHTML);
+                     console.log(this.innerHTML + " INDEX = " + index);
+                     inputText.value = this.innerHTML;
+                 };
+                 
+             }
+            
+            function refreshArray()
+            {
+                tab.length = 0;
+                items = document.querySelectorAll("#list li");
+
+                for(var i = 0; i < items.length; i++){
+                 tab.push(items[i].innerHTML);
+               }
+            }
+            function addLI(){
+              var retrievedObject = sessionStorage.getItem('person')
+                
+                var listNode = document.getElementById("list"),
+                    textNode = document.createTextNode(retrievedObject),
+                    liNode = document.createElement("LI");
+                    
+                    console.log(retrievedObject)
+                    liNode.appendChild(textNode);
+                    listNode.appendChild(liNode);
+                    
+                    refreshArray();
+                  
+                    liNode.onclick = function(){
+                     index = tab.indexOf(liNode.innerHTML);
+                     console.log(liNode.innerHTML + " INDEX = " + index);
+          
+                     inputText.value = liNode.innerHTML;
+                 };
+             }
+             function DeletList(){
+               sessionStorage.removeItem('person')
+             }
+
+             function editLI(){
+                 items[index].innerHTML = inputText.value;
+                 var retrievedObject = sessionStorage.getItem('person')
+                  let show = JSON.parse(retrievedObject)
+
+                  sessionStorage.setItem('person', inputText.value)
+                console.log(show)
+                 refreshArray();
+              }
+              
+              function deleteLI(){
+                  
+                      refreshArray();
+                      if(items.length > 0){
+                          items[index].parentNode.removeChild(items[index]);
+                          inputText.value = "";
+                      }
+              }
+</script>
+</div>
+</div>
+
+</body>
+
+</html>
