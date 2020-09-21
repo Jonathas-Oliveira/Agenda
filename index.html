@@ -34,7 +34,7 @@
           <div class="col-md-8 mb-3">
             <label for="validationCustom01">Nome completo</label>
             <input type="text" class="form-control" name="nome" id="validationCustom01" placeholder="Nome completo"
-              value="" required>
+               required>
             <div class="valid-feedback">
               Ótimo!
             </div>
@@ -143,7 +143,7 @@ let Regex =/^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d
 
 let validation =  $('.needs-validation').hasClass('was-validated')//verificando campos
 
-if  (Regex.test(ValueCurrent) == true && validation == true ){
+if  (Regex.test(ValueCurrent) == true  ){
         person.push(newPerson)
         sessionStorage.setItem('person', JSON.stringify(person));
 }if(Regex.test(ValueCurrent) == false) {
