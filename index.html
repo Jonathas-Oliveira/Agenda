@@ -1,3 +1,5 @@
+
+  
 <!DOCTYPE html>
 <html>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
@@ -137,17 +139,22 @@ if (sessionStorage.person ) {
   person = [];
 }
 
+
 let ValueCurrent = $("#validationCustom05").val()
 ValueCurrent.toString()
 let Regex =/^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/
-
 let validation =  $('.needs-validation').hasClass('was-validated')//verificando campos
 
-if  (Regex.test(ValueCurrent) == true  ){
+let RegexName =/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/
+let ValueCurrentName = $("#validationCustom01").val()
+ValueCurrentName.toString()
+
+if  (Regex.test(ValueCurrent) == true &&  RegexName.test(ValueCurrentName) == true ){
+
         person.push(newPerson)
         sessionStorage.setItem('person', JSON.stringify(person));
-}if(Regex.test(ValueCurrent) == false) {
-  window.alert('Digite um telefone válido!')
+}else{
+  window.alert('Verifique os campos!')
 }
 var retrievedObject = sessionStorage.getItem('person')
 let show = JSON.parse(retrievedObject)
