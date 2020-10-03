@@ -5,4 +5,4 @@
 * BootStrap
 * Jquery
 * CSS3
-* HTML5
+* HTML5.
